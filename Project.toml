@@ -1,0 +1,9 @@
+name = "SimulatedAnnealing"
+uuid = "8d799c35-7cf9-4c80-99e1-f4045e8ffe77"
+authors = ["Lima Bruno <lima.bruno@bcg.com>"]
+version = "0.1.0"
+
+[deps]
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
