@@ -1,4 +1,5 @@
 module SimulatedAnnealing
+export State, Parameters, move!, energy, optimize
 
 import Distributions: Normal
 import Printf: @printf
@@ -30,8 +31,9 @@ end
 
 function cooling_schedule(params::Parameters)
     function temperature(step)
-        return params.maxtemp *
-               (params.mintemp / params.maxtemp)^((step - 1) / params.steps)
+        return params.maxtemp * (
+            (params.mintemp / params.maxtemp)^((step - 1) / params.steps)
+        )
     end
 
     return temperature
@@ -50,8 +52,8 @@ end
 function update!(
     state::State,
     previous_state::State,
-    best_state::State,
     previous_energy::Number,
+    best_state::State,
     current_temp::Number,
 )
     move!(state)
@@ -64,9 +66,11 @@ function update!(
         if ΔE < 0 && current_energy < energy(best_state)
             best_state = deepcopy(state)
         end
+    else
+        state = deepcopy(previous_state)
     end
 
-    return previous_state, previous_energy, best_state
+    return state, previous_state, previous_energy, best_state
 end
 
 function report(step, max_steps, temperature, energy)
@@ -110,8 +114,8 @@ function optimize(state::State, params::Parameters)
     previous_energy = energy(state)
 
     for step = 1:params.steps
-        previous_state, previous_energy, best_state = update!(
-            state, previous_state, best_state, previous_energy, current_temp
+        state, previous_state, previous_energy, best_state = update!(
+            state, previous_state, previous_energy, best_state, current_temp
         )
         if step % Int(floor(params.steps / params.updates)) == 1 || step == params.steps
             report(step, params.steps, current_temp, previous_energy)
