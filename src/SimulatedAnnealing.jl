@@ -4,6 +4,7 @@ export State, Parameters, optimize
 # types
 include("types/state.jl")
 include("types/parameters.jl")
+include("types/history.jl")
 
 # reporting
 include("utils/report.jl")
