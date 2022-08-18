@@ -16,7 +16,7 @@ end
 function move!(state::State)
     dist = Normal(0, state.σ)
     ϵ = rand(dist)
-    state.value += ϵ
+    return state.value += ϵ
 end
 
 # define how we compute the energy
@@ -34,11 +34,7 @@ params = Parameters(10000, 100, 100, 1)
 # optimize
 @time result = optimize(state, params)
 
-@printf(
-    "Best state: %.3f | Best energy: %.3f \n", 
-    result.value,
-    energy(result)
-)
+@printf("Best state: %.3f | Best energy: %.3f \n", result.value, energy(result))
 
 # using Plots
 # x = range(-20, 20, length=100)
